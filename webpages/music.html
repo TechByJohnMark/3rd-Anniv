@@ -1,0 +1,464 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="/style.css">
+    <title>3rd Anniversary</title>
+</head>
+<body>
+
+    <div class="menu-toggle" id="menu-toggle">
+        <div class="menu-icon" id="menu-icon">
+          <span></span>
+          <span></span>
+          <span></span>
+        </div>
+        <div class="close-icon" id="close-icon">&times;</div>
+      </div>
+    
+      <nav class="fullscreen-navbar" id="fullscreen-navbar">
+        <ul class="nav-links">
+          <li><a href="/index.html">Home</a></li>
+          <li><a href="gallery.html">Gallery</a></li>
+          <li><a href="music.html">Music</a></li>
+          <li><a href="video.html">Video</a></li>
+          <li><a href="letter.html">Letter</a></li>
+        </ul>
+      </nav>
+
+      <div class="header">
+        <p>Our Favorite Artist's</p>
+      </div>
+
+      <div class="music-player">
+        <!-- Tabs Section -->
+        <div class="tabs">
+          <button id="current-tab" class="tab-btn active">Now Playing</button>
+          <button id="songs-tab" class="tab-btn">Songs</button>
+        </div>
+    
+        <!-- Now Playing Section -->
+        <div id="now-playing" class="tab-content active">
+          <div class="album-art-container">
+            <div class="rotating-disc">
+              <img id="album-art" src="" alt="Album Art">
+            </div>
+          </div>
+
+          <div class="song-info">
+            <h2 id="song-title">Song Title</h2>
+            <p id="artist-name">Artist Name</p>
+          </div>
+
+          <div class="seek-control">
+            <input id="seek-slider" type="range" min="0" max="100" value="0">
+            <div class="time-display">
+              <span id="current-time">0:00</span> / <span id="total-duration">0:00</span>
+            </div>
+          </div>
+
+          <div class="controls">
+            <button id="prev-btn" class="control-btn">⏮️</button>
+            <button id="play-btn" class="control-btn">▶️</button>
+            <button id="next-btn" class="control-btn">⏭️</button>
+          </div>
+
+          <div class="volume-control">
+            <label for="volume-slider">Volume:</label>
+            <input id="volume-slider" type="range" min="0" max="100" value="1">
+          </div>
+        </div>
+    
+        <!-- Songs List Section -->
+        <div id="songs-list" class="tab-content">
+          <ul id="song-list">
+            <!-- Songs will be populated here -->
+          </ul>
+        </div>
+    
+        <audio id="audio-player"></audio>
+      </div>
+<!-- CSS -->
+<style>
+/* Global styles */
+body {
+  margin: 0;
+  padding: 0;
+  font-family: cursive;
+  background-image: url('/img/home/white.png');
+  color: #fff;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+}
+
+/* Music Player Container */
+.music-player {
+  background: rgba(0, 0, 0, 0.7);
+  padding: 20px;
+  border-radius: 20px;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.5);
+  width: 350px;
+}
+
+/* Tabs */
+.tabs {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 20px;
+}
+
+.tab-btn {
+  flex: 1;
+  background: #444;
+  color: #fff;
+  border: none;
+  padding: 10px;
+  cursor: pointer;
+  font-family: cursive;
+  font-size: 16px;
+  transition: background 0.3s ease;
+}
+
+.tab-btn.active {
+  background: #666;
+}
+
+/* Tab Content */
+.tab-content {
+  display: none;
+}
+
+.tab-content.active {
+  display: block;
+  text-align: center;
+}
+
+/* Album Art */
+.album-art-container {
+  position: relative;
+  width: 200px;
+  height: 200px;
+  margin: 0 auto 20px;
+}
+
+.rotating-disc {
+  width: 100%;
+  height: 100%;
+  border-radius: 50%;
+  overflow: hidden;
+  animation: spin 10s linear infinite;
+}
+
+.rotating-disc img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  border-radius: 50%;
+}
+
+/* Song Info */
+.song-info h2 {
+  font-size: 24px;
+  margin: 10px 0;
+}
+
+.song-info p {
+  font-size: 16px;
+  color: #bbb;
+  margin: 0;
+}
+
+/* Controls */
+.controls {
+  margin: 20px 0;
+}
+
+.control-btn {
+  background: #444;
+  color: #fff;
+  border: none;
+  padding: 10px 15px;
+  margin: 0 10px;
+  border-radius: 5px;
+  font-size: 18px;
+  cursor: pointer;
+  transition: background 0.3s ease;
+}
+
+.control-btn:hover {
+  background: #666;
+}
+
+/* Volume Control */
+.volume-control {
+  margin: 20px 0;
+  text-align: center;
+}
+
+#volume-slider {
+  width: 90%;
+  cursor: pointer;
+}
+
+/* Seek Control */
+.seek-control {
+  margin-top: 15px;
+  text-align: center;
+}
+
+#seek-slider {
+  width: 90%;
+  margin: 10px auto;
+  cursor: pointer;
+}
+
+.time-display {
+  font-size: 14px;
+  color: #bbb;
+  display: flex;
+  justify-content: center;
+  gap: 10px;
+}
+
+/* Playlist */
+#song-list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+#song-list li {
+  padding: 10px;
+  margin: 5px 0;
+  text-align: left;
+  background: #333;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background 0.3s ease;
+}
+
+#song-list li:hover {
+  background: #555;
+}
+
+/* Style for the top navigation bar */
+.header {
+  width: 100%;
+  position: fixed;  /* Fix the header at the top */
+  top: 0;           /* Align it to the top */
+  background-color: #1f1f1f; /* Optional: set background color */
+  color: #fff;      /* Text color */
+  text-align: center; /* Center the text horizontally */
+  padding: 20px;   /* Padding to make it look better */
+  z-index: 1000;     /* Ensure it's above other content */
+}
+
+/* Style for the header title */
+.header p {
+  font-size: 1.2em;
+}
+
+/* Rotating Animation */
+@keyframes spin {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
+}
+
+</style>
+
+
+<!-- JS -->
+<script>
+const songs = [
+  {
+    title: "Moonlit Floor",
+    artist: "LISA",
+    file: "/music/moonlitfloor.mp3",
+    image: "/img/artist/lisa.png",
+  },
+  {
+    title: "Love Story",
+    artist: "Taylor Swift",
+    file: "/music/lovestory.mp3",
+    image: "/img/artist/taylor.png",
+  },
+  {
+    title: "Espresso",
+    artist: "Sabrina Carpenter",
+    file: "/music/espresso.mp3",
+    image: "/img/artist/sabrina.png",
+  },
+  {
+    title: "O Ninanais",
+    artist: "Arthur Nery",
+    file: "/music/oninanais.mp3",
+    image: "/img/artist/arthur.png",
+  },
+  {
+    title: "Dungaw",
+    artist: "Adie",
+    file: "/music/dungaw.mp3",
+    image: "/img/artist/adie.png",
+  },
+  {
+    title: "Misteryoso",
+    artist: "Cup of Joe",
+    file: "/music/misteryoso.mp3",
+    image: "/img/artist/coj.png",
+  }
+  
+];
+
+let currentSongIndex = 0;
+
+const audioPlayer = document.getElementById("audio-player");
+const songTitle = document.getElementById("song-title");
+const artistName = document.getElementById("artist-name");
+const albumArt = document.getElementById("album-art");
+const playBtn = document.getElementById("play-btn");
+const prevBtn = document.getElementById("prev-btn");
+const nextBtn = document.getElementById("next-btn");
+const songList = document.getElementById("song-list");
+const volumeSlider = document.getElementById("volume-slider");
+
+const nowPlayingTab = document.getElementById("current-tab");
+const songsTab = document.getElementById("songs-tab");
+const nowPlayingContent = document.getElementById("now-playing");
+const songsListContent = document.getElementById("songs-list");
+
+function loadSong(index) {
+  const song = songs[index];
+  songTitle.textContent = song.title;
+  artistName.textContent = song.artist;
+  albumArt.src = song.image;
+  audioPlayer.src = song.file;
+  audioPlayer.load();
+}
+
+function playPause() {
+  if (audioPlayer.paused || audioPlayer.ended) {
+    audioPlayer.play();
+    playBtn.textContent = "⏸️"; // Change button to Pause
+  } else {
+    audioPlayer.pause();
+    playBtn.textContent = "▶️"; // Change button to Play
+  }
+}
+
+function nextSong() {
+  currentSongIndex = (currentSongIndex + 1) % songs.length;
+  loadSong(currentSongIndex);
+  audioPlayer.play();
+  playBtn.textContent = "⏸️"; // Ensure the button reflects playing state
+}
+
+function prevSong() {
+  currentSongIndex = (currentSongIndex - 1 + songs.length) % songs.length;
+  loadSong(currentSongIndex);
+  audioPlayer.play();
+  playBtn.textContent = "⏸️"; // Ensure the button reflects playing state
+}
+
+function selectSong(index) {
+  currentSongIndex = index;
+  loadSong(currentSongIndex);
+  audioPlayer.play();
+  playBtn.textContent = "⏸️"; // Change button to Pause
+}
+
+function adjustVolume() {
+  audioPlayer.volume = volumeSlider.value / 100; // Map slider value (0-100) to volume (0-1)
+}
+
+function populatePlaylist() {
+  songList.innerHTML = "";
+  songs.forEach((song, index) => {
+    const li = document.createElement("li");
+    li.textContent = `${song.title} - ${song.artist}`;
+    li.addEventListener("click", () => selectSong(index));
+    songList.appendChild(li);
+  });
+}
+
+// Tab Switching
+nowPlayingTab.addEventListener("click", () => {
+  nowPlayingTab.classList.add("active");
+  songsTab.classList.remove("active");
+  nowPlayingContent.classList.add("active");
+  songsListContent.classList.remove("active");
+});
+
+songsTab.addEventListener("click", () => {
+  songsTab.classList.add("active");
+  nowPlayingTab.classList.remove("active");
+  songsListContent.classList.add("active");
+  nowPlayingContent.classList.remove("active");
+});
+
+// Event Listeners
+playBtn.addEventListener("click", playPause);
+prevBtn.addEventListener("click", prevSong);
+nextBtn.addEventListener("click", nextSong);
+volumeSlider.addEventListener("input", adjustVolume);
+
+// Initialize Player
+window.addEventListener("DOMContentLoaded", () => {
+  loadSong(currentSongIndex);
+  populatePlaylist();
+
+// Set initial volume to 40%
+  audioPlayer.volume = 0.4;
+  volumeSlider.value = 40;
+});
+
+// Automatically play next song when current song ends
+audioPlayer.addEventListener("ended", nextSong);
+
+//Song Player
+const seekSlider = document.getElementById("seek-slider");
+const currentTimeDisplay = document.getElementById("current-time");
+const totalDurationDisplay = document.getElementById("total-duration");
+
+function formatTime(seconds) {
+  const minutes = Math.floor(seconds / 60);
+  const secs = Math.floor(seconds % 60);
+  return `${minutes}:${secs < 10 ? "0" : ""}${secs}`;
+}
+
+function updateSeekBar() {
+  const currentTime = audioPlayer.currentTime;
+  const duration = audioPlayer.duration;
+
+  seekSlider.value = (currentTime / duration) * 100 || 0; // Avoid NaN on initialization
+  currentTimeDisplay.textContent = formatTime(currentTime);
+  totalDurationDisplay.textContent = formatTime(duration);
+}
+
+function seekSong() {
+  const seekTo = (seekSlider.value / 100) * audioPlayer.duration;
+  audioPlayer.currentTime = seekTo;
+}
+
+function onSongLoaded() {
+  totalDurationDisplay.textContent = formatTime(audioPlayer.duration);
+  seekSlider.max = 100;
+}
+
+// Attach event listeners
+seekSlider.addEventListener("input", seekSong);
+audioPlayer.addEventListener("timeupdate", updateSeekBar);
+audioPlayer.addEventListener("loadedmetadata", onSongLoaded);
+
+</script>
+
+
+<script src="/script.js"></script>    
+</body>
+</html>

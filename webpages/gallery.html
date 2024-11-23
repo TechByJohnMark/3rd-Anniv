@@ -1,0 +1,191 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="/style.css">
+    <title>3rd Anniversary</title>
+</head>
+<body>
+  <div class="header">
+    <p>Our 2024 Pictures</p>
+  </div>
+
+    <div class="menu-toggle" id="menu-toggle">
+        <div class="menu-icon" id="menu-icon">
+          <span></span>
+          <span></span>
+          <span></span>
+        </div>
+        <div class="close-icon" id="close-icon">&times;</div>
+      </div>
+    
+      <nav class="fullscreen-navbar" id="fullscreen-navbar">
+        <ul class="nav-links">
+          <li><a href="/index.html">Home</a></li>
+          <li><a href="gallery.html">Gallery</a></li>
+          <li><a href="music.html">Music</a></li>
+          <li><a href="video.html">Video</a></li>
+          <li><a href="letter.html">Letter</a></li>
+        </ul>
+      </nav>
+
+<div class="gallery-container">
+  <div class="polaroid">
+    <img src="/img/gallery/g1.png" alt="Image 1">
+    <div class="caption">Pampanga</div>
+  </div>
+  <div class="polaroid">
+    <img src="/img/gallery/g2.png" alt="Image 2">
+    <div class="caption">Cat Cafe</div>
+  </div>
+  <div class="polaroid">
+    <img src="/img/gallery/g3.png" alt="Image 3">
+    <div class="caption">Mall of Asia</div>
+  </div>
+  <div class="polaroid">
+    <img src="/img/gallery/g4.png" alt="Image 4">
+    <div class="caption">PITX</div>
+  </div>
+  <div class="polaroid">
+    <img src="/img/gallery/g5.png" alt="Image 5">
+    <div class="caption">Aperitif PH</div>
+  </div>
+  <div class="polaroid">
+    <img src="/img/gallery/g6.png" alt="Image 6">
+    <div class="caption">Maple Grove</div>
+  </div>
+</div>
+
+<!-- CSS -->
+<style>
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: Arial, sans-serif;
+  background-image: url('/img/home/white.png');
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  padding-top: 120px;
+  margin: 0;
+}
+
+.gallery-container {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+  gap: 20px;
+  padding: 20px;
+  max-width: 100%;
+  width: 100%;
+}
+
+.polaroid {
+  background-color: white;
+  border: 5px solid #fff;
+  border-radius: 10px;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+  padding: 10px;
+  text-align: center;
+  transition: transform 0.3s ease;
+}
+
+.polaroid:hover {
+  transform: rotate(0deg);
+}
+
+.polaroid img {
+  
+  max-width: 100%;
+  border-radius: 10px;
+}
+
+.caption {
+  font-size: 15px;
+  margin-top: 10px;
+  color: #333;
+  font-weight: bold;
+  font-family: cursive;
+}
+
+.lightbox {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.7);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.lightbox img {
+  max-width: 90%;
+  max-height: 90%;
+}
+
+/* Style for the top navigation bar */
+.header {
+  width: 100%;
+  position: fixed;  /* Fix the header at the top */
+  top: 0;           /* Align it to the top */
+  background-color: #1f1f1f; /* Optional: set background color */
+  color: #fff;      /* Text color */
+  text-align: center; /* Center the text horizontally */
+  padding: 20px;   /* Padding to make it look better */
+  z-index: 1000;     /* Ensure it's above other content */
+}
+
+/* Style for the header title */
+.header p {
+  font-size: 1.2em;
+  font-family: cursive;
+  padding-top: 5px;
+}
+
+@media screen and (max-width: 600px) {
+  .gallery-container {
+    grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+  }
+
+  .caption {
+    font-size: 15px;
+  }
+}
+</style>
+
+
+<!-- JS -->
+<script>
+// Example of adding a lightbox feature for enlarged image view
+const polaroids = document.querySelectorAll('.polaroid img');
+
+polaroids.forEach(polaroid => {
+  polaroid.addEventListener('click', () => {
+    const imageSrc = polaroid.src;
+    const lightbox = document.createElement('div');
+    lightbox.classList.add('lightbox');
+
+    const fullImage = document.createElement('img');
+    fullImage.src = imageSrc;
+    lightbox.appendChild(fullImage);
+
+    lightbox.addEventListener('click', () => {
+      document.body.removeChild(lightbox);
+    });
+
+    document.body.appendChild(lightbox);
+  });
+});
+
+</script>
+
+<script src="/script.js"></script>    
+</body>
+</html>

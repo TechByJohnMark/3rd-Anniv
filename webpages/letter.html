@@ -1,0 +1,182 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="/style.css">
+    <title>3rd Anniversary</title>
+</head>
+<body>
+
+  <div class="header">
+    <p>Love Letter</p>
+  </div>
+
+    <div class="menu-toggle" id="menu-toggle">
+        <div class="menu-icon" id="menu-icon">
+          <span></span>
+          <span></span>
+          <span></span>
+        </div>
+        <div class="close-icon" id="close-icon">&times;</div>
+      </div>
+    
+      <nav class="fullscreen-navbar" id="fullscreen-navbar">
+        <ul class="nav-links">
+          <li><a href="/index.html">Home</a></li>
+          <li><a href="gallery.html">Gallery</a></li>
+          <li><a href="music.html">Music</a></li>
+          <li><a href="video.html">Video</a></li>
+          <li><a href="letter.html">Letter</a></li>
+        </ul>
+      </nav>
+
+<div class="container">
+  <div class="letter" id="letterContent">
+    <h1 class="title">Happy 3rd Anniversary</h1>
+    <p class="body" id="letterBody">My Love Chricelyn,<br><br> When I think back on our journey, it feels like fate brought us together in the most perfect way. Your love has showed me what it means to be cared for since the beginning, and it just becomes stronger with each passing year. <br><br> When you answered yes, everything changed, and I realized that our story had only just begun. The experiences we've shared, from simple moments to beautiful journeys, reminds me that it's not about the destination, but about the joy of having you by my side.<br><br> Each year spent with you has been a blessing, and I am forever thankful for the love we've shared. I'm looking forward to many unforgettable adventures with you. I love you.<br><br> Forever yours, <br> John Mark</p>
+
+    <button id="revealButton">Open The Letter</button>
+    <button id="closeButton" style="display:none;">Close The Letter</button>
+  </div>
+</div>
+<!-- CSS -->
+<style>
+body{
+  background-image: url('/img/home/white.png');
+  font-family: cursive;
+}
+
+/* Styling for the header */
+.header {
+  background-color: #1f1f1f;
+  color: #fff;
+  text-align: center;
+  padding: 20px;
+}
+
+/* Title styling */
+.header p {
+  font-size: 1em;
+  margin-top:5px;
+  font-family: cursive;
+}
+
+.container {
+  text-align: center;
+  margin: 15px auto;
+  border: 2px solid #a0522d; /* Vintage brown border */
+  background-image:url('/img/home/paper.png');
+  border-radius: 5px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* Subtle shadow for depth */
+  width: 45vh;
+}
+
+.letter {
+  padding: 20px;
+}
+
+.title {
+  color: #8b4513; /* Dark brown color for vintage text */
+  font-size: 25px;
+  font-weight: bold;
+  font-family: cursive
+}
+
+.body {
+  color: #5c4033; /* A slightly lighter brown color for the body text */
+  font-size: 15px;
+  line-height: 1.6;
+  display: none;
+  margin-top: 20px;
+  text-align: left; /* Align text to the left for a more handwritten feel */
+}
+
+button {
+  background-color: #a0522d; /* Vintage brown button */
+  color: white;
+  border: none;
+  padding: 12px 24px;
+  font-size: 16px;
+  font-weight: bold;
+  border-radius: 8px;
+  cursor: pointer;
+  margin-top: 20px;
+  transition: background-color 0.3s ease;
+}
+
+button:hover {
+  background-color: #8b4513; /* Darker brown for hover effect */
+}
+
+button:active {
+  transform: scale(0.98); /* Button press effect */
+}
+
+.fadeIn {
+  animation: fadeIn 2s ease-out;
+}
+
+@keyframes fadeIn {
+  0% {
+    opacity: 0;
+  }
+  100% {
+    opacity: 1;
+  }
+}
+
+</style>
+
+
+<!-- JS -->
+<script>
+document.getElementById("revealButton").addEventListener("click", function() {
+  const letterBody = document.getElementById("letterBody");
+  
+  // Show the letter content
+  letterBody.style.display = "block";
+  letterBody.classList.add("fadeIn");
+
+  // Change the button text to "Go Back"
+  const revealButton = document.getElementById("revealButton");
+  revealButton.textContent = "Close The Letter";
+
+  // Attach a new event listener for the "Go Back" functionality
+  revealButton.removeEventListener("click", arguments.callee); // Remove the old "reveal" functionality
+  revealButton.addEventListener("click", close); // Add the new "close" functionality
+});
+
+function close() {
+  const letterBody = document.getElementById("letterBody");
+
+  // Hide the letter content
+  letterBody.style.display = "none";
+
+  // Change the button text back to "Click to Reveal My Heart"
+  const revealButton = document.getElementById("revealButton");
+  revealButton.textContent = "Open The Letter";
+
+  // Attach a new event listener for the "reveal" functionality
+  revealButton.removeEventListener("click", close); // Remove the old "close" functionality
+  revealButton.addEventListener("click", function() {
+    const letterBody = document.getElementById("letterBody");
+
+    // Show the letter content again
+    letterBody.style.display = "block";
+    letterBody.classList.add("fadeIn");
+
+    // Change the button text to "Go Back"
+    revealButton.textContent = "Close The Letter";
+    
+    // Attach the new event listener for closing
+    revealButton.removeEventListener("click", arguments.callee);
+    revealButton.addEventListener("click", close);
+  });
+}
+
+</script>
+
+<script src="/script.js"></script>    
+</body>
+</html>
