@@ -147,7 +147,7 @@ main {
 
 /* Layer 2 */
 .box-2 {
-  background-image: url('/img/home/white.png');
+  background-image: url('img/home/white.png');
   background-size: cover; /* Ensures the image covers the entire box */
   background-position: center; /* Centers the image */
   background-repeat: no-repeat; /* Prevents the image from repeating */
