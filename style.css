@@ -153,7 +153,7 @@ main {
   background-repeat: no-repeat; /* Prevents the image from repeating */
   align-content: center;
   text-align: justify;
-  font-size: x-small;
+  font-size: small;
   font-family: cursive;
   color: black;
 }
